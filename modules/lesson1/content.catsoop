@@ -1,0 +1,409 @@
+<section>Intro</section>
+
+Welcome to **Lesson 1: “Prepping for the 5K"** - your first lap towards
+learning Python.
+
+
+<section>Scenario</section>
+
+You are aiming to beat your 5K PR at **@{minutes_today} min @{seconds_today} sec**
+on race day! Let's dive deep into **primitive data types** using your own stats.
+At the end, you'll learn how to use Python as a powerful calculator - so get
+ready to delete that Calculator app off your devices 😉
+
+<section>Primitive Data Types</section>
+
+What does this even mean? Well, a _data type_ is a type of classification that
+specifies the kind of value that a variable can hold and what kind of operations
+can be done on that variable.
+
+Just like how triangles are the most basic shape from which all other shapes can
+be made from (don't beleive me? Try drawing a shape that can't be made from
+several triangles), primitive datatypes - like text, integers, and
+decimals - and are the backbone of all the data strcutures and algorithms that
+govern our world today. 
+
+Python's primitive data types that appear in just about every script out there
+include:
+
+|   Type  | Full Name | Example                      | Real-World Analogy            |
+|---------|-----------|------------------------------|-------------------------------|
+|  `int`  |  integer  | `7000`                       | # Steps Taken on Treadmill    |
+| `float` |   float   | `@{round(5000/(20*60+5),2)}` | Speed (meter/sec)             |
+|  `str`  |  string   | `"You got this!"`            | Motivational text             |
+| `bool`  |  boolean  | `True` or `False`            | PR achieved? (`yes/no`)       |
+
+
+Do these look familar? Well they should! Excel and Google Sheets have their own
+datatypes like booleans, numbers (ints and floats), and text, but also dates and
+special types for accounting... but note that the internal implementation of
+these latter datatypes actually just use primitive types like ints or floats...
+
+<img src="CURRENT/sheets.png" alt="sheets" height="500">
+
+<section>Check-in Questions</section>
+
+<question multiplechoice>
+csq_prompt = "Which Python type best stores your average pace of `@{round(3.1/(20 + (5/60)),2)}` miles/min?"
+csq_options = ["int", "float", "str", "bool"]
+csq_soln = "float"
+</question>
+
+<question smallbox>
+csq_prompt = "In a few words, why *not* use an `int` for that pace value?"
+csq_soln = "precision!"
+csq_check_function = lambda sub, sol: any(x in sub.lower() for x in ["decimal", "precision", "float"])
+csq_explanation = "A float keeps the fractional (decimal) part—an int would lop it off."
+</question>
+
+<question pythoncode>
+csq_prompt = """Set the variables to the following values:
+- `pi` to the float `3.14`
+- `number_of_olive_gardens_in_balitmore` to the integer `1`
+- `name` to the string `"Andre"` (note the quotation marks!!)
+- `pi_as_a_string` to the string `"3.14"` (note: the quotation marks make it a STRING!)
+
+For example, to set a variable `x` to `8`, you would write:
+
+```python
+x = 8
+```
+"""
+csq_initial = """def set_variables():
+  pi = # <-- fill out
+  number_of_olive_gardens_in_balitmore = # <-- fill out
+  name = # <-- fill out
+  pi_as_a_string = # <-- fill out
+
+  return pi, number_of_olive_gardens_in_balitmore, name, pi_as_a_string
+"""
+csq_soln = """def set_variables():
+    return 3.14, 1, "Andre", "3.14"
+"""
+
+csq_npoints = 3
+
+csq_tests = [
+{'code': 'ans = set_variables()'}
+]
+</question>
+
+<section>Primitive Math</section>
+
+Now that we know the datatypes, let's make sure we know how to manipulate them!
+
+Starting with the integer (`int`) datatype, here are some of the operations you
+can do on them:
+
+| Operation         | Example              |
+|-------------------|----------------------|
+| Addition (+)      | 2 + 3 = 5            |
+| Subtraction (-)   | 5 - 2 = 3            |
+| Multiplication (*)| 3 * 2 = 6            |
+| Division (/)      | 5 / 2 = 2.5          |
+| Exponent (**)     | 2 ** 3 = 8           |
+| Equals (==)       | 2 == 2 → True        |
+| Greater (>)       | 3 > 5 → False        |
+
+These operations work pretty much like you would expect, but note that the
+comparison ones like `==` and `>`, and the other ones not mentioned here like
+`<` (less than), `<=` (less than or equal to), and `>=`, will always return a
+BOOLEAN, since the expression can only be evaluated to TRUE or FALSE.
+
+Also note that these operations can be used together. The order of operatoins,
+PEMDAS, holds here, but to be safe you can just always wrap operations you want
+to be evaluated first in parenthesis.
+
+```python
+>>> (10 + 2)/6  # does addition first before the division
+2
+```
+
+`float`s work similarly as `int`s above. Note that since they are both numbers,
+you can actually run these operations on a mix of the two, e.g.
+```py
+>>> 2 + 3.0   # int added with a float
+5.0
+```
+
+One caveat here is that if a `float` is present in the expression, then the
+result will be a float - even if the result is a whole number as the above
+example shows.
+
+Next are string (`str`) operations, which aren't hard to understand but become a
+bit less obvious:
+
+| Operation         | Example                    |
+|-------------------| ---------------------------|
+| Addition (+)      | "hi" + "5" = "hi5"         |
+| Subtraction (-)   | n/a                        |
+| Multiplication (*)| "ha" * 3 = "hahaha"        |
+| Division (/)      | n/a                        |
+| Exponent (**)     | n/a                        |
+| Equals (==)       | "hi" == "hi" → True        |
+| Greater (>)       | "cat" > "bat" → True       |
+
+Okay, a couple of notes here:
+* Addition (`+`) is really more of a
+"APPEND" or ["CONCATENATE"](https://support.google.com/docs/answer/3094123?hl=en)
+operation where it just joins two strings together.
+* Subtraction (`-`) does not exist for strings. Ask yourself, what would string
+subtraction even look like??
+* While it doesn't make sense for a string to be multiplied (`*`) with another
+string, you CAN multiple a string by an INTEGER (`int`) and it will simply
+produce a new string that repeats the string x times.
+* Again, division (`/`) of strings does not make sense.
+* Again, exponents (`**`) of strings does not make sense either. `"hello" ** 3`
+literally is nonsense.
+* Python checks if a string "equals" (`==`) another string by quite literally
+checking it character by character. Capitalization is important, so
+`"andre" == "Andre"` would evaluate to `False`.
+* Comparison operations like `<` or `>` actually work on strings! Think about
+how you would sort a book in a library - you would first compare the titles
+starting with the first letter, and if they match then you would move on to the
+second letter. It works the same way here. Fun fact, every character you can
+think of (even emojis) have a numerbing associated with them. A simple yet
+powerful "encoding" is the
+[ASCII](https://media.geeksforgeeks.org/wp-content/uploads/20240304094301/ASCII-Table.png)
+(pronounced "ass-key") table, which only takes 8 BITS to represent a whole range
+of characters. Take a look if you have time! **Note: if interested, ask your
+instructor about binary numbers!**
+
+Finally, we get to `boolean`s. These are a bit less intuitive too, but no until
+you recognize the trick:
+
+| Operation         | Example                  |
+|-------------------|--------------------------|
+| Addition (+)      | True + True = 2          |
+| Subtraction (-)   | True - False = 1         |
+| Multiplication (*)| True * 8 = 8             |
+| Division (/)      | True / 2 = 0.5           |
+| Exponent (**)     | False ** 5 = 0           |
+| Equals (==)       | True == False → False    |
+| Greater (>)       | True > False → True      |
+
+See the pattern? For all operations, `True` essentially acts like a `1` and
+`False` acts like a `0`. Go back and look at those rows with this in mind.
+Making more sense now?
+
+
+<section>Math Summary</section>
+
+The following table summarizes operations you can (or can't do) on these
+datatypes:
+
+| Operation         | `int`                | `float`                | `string`                   | `boolean`                |
+|-------------------|----------------------|------------------------|----------------------------|--------------------------|
+| Addition (+)      | 2 + 3 = 5            | 2.5 + 1.5 = 4.0        | "hi" + "5" = "hi5"         | True + True = 2          |
+| Subtraction (-)   | 5 - 2 = 3            | 5.5 - 2.2 = 3.3        | n/a                        | True - False = 1         |
+| Multiplication (*)| 3 * 2 = 6            | 2.0 * 4.5 = 9.0        | "ha" * 3 = "hahaha"        | True * 8 = 8             |
+| Division (/)      | 5 / 2 = 2.5          | 7.0 / 2.0 = 3.5        | n/a                        | True / 2 = 0.5           |
+| Exponent (**)     | 2 ** 3 = 8           | 2.0 ** 3 = 8.0         | n/a                        | False ** 5 = 0           |
+| Equals (==)       | 2 == 2 → True        | 2.0 == 2.0 → True      | "hi" == "hi" → True        | True == False → False    |
+| Greater (>)       | 3 > 5 → False        | 5.5 > 3.2 → True       | "cat" > "bat" → True       | True > False → True      |
+
+**A Quick Note:** We're actually not done with booleans just yet... booleans
+actaully have two more operations - `and` and `or` - that are the backbone of
+all [boolean algebra](https://en.wikipedia.org/wiki/Boolean_algebra#Operations).
+They aren't hard - they do exactly what you think they would do:
+* `True and True` -> `True`
+* `True and False` -> `False`
+* `True or False` -> `True`
+* `False or False` -> `False`
+
+More on this in the next lesson!
+
+<section>Check-in Questions</section>
+
+Get ready to brush up on some math ;)
+
+<question multiplechoice>
+csq_renderer = 'radio'
+csq_prompt='What does the python expression `2 + 2.0` evaluate to?'
+csq_options=['$4$', '$4.0$', 'Error']
+csq_soln = 1
+csq_soln_mode = 'index'
+csq_explanation = """Remember that while you CAN run operations with an `int`
+  and a `float`, the return value will be a `float`."""
+</question>
+
+<question multiplechoice>
+csq_renderer = 'radio'
+csq_prompt='`True == 1` evaluates to?'
+csq_options=['`True`', '`False`']
+csq_soln = 0
+csq_soln_mode = 'index'
+csq_explanation = """Remember that booleans can be treated as either `1`
+  (for `True`) or `0` (for `False`)"""
+</question>
+
+<question multiplechoice>
+csq_renderer = 'radio'
+csq_prompt='`"Fabrizzio" == "fabrizzio"` evaluates to?'
+csq_options=['`True`', '`False`']
+csq_soln = 1
+csq_soln_mode = 'index'
+csq_explanation = """Strings must match character by character, case sensitive"""
+</question>
+
+Here's some harder ones:
+
+<question pythoncode>
+csq_prompt = r"""Assume you are given the variable `temp_f`. Given that the
+  equation to turn farenheit to celcius is $(temp\_f - 32) * \frac{5}{9}$, write
+  this in python, assuming `temp_f` holds the float of the temperature in
+  farenheit.
+"""
+csq_initial = """def calculate_celcius(temp_f: float) -> float:
+  return # <-- your expression here, right next to the `return` statement
+"""
+csq_soln = """def calculate_celcius(temp_f: float) -> float:
+  return (temp_f - 32) * (5/9)
+"""
+csq_tests = [
+{'code': 'ans = abs(calculate_celcius(72)) - 22.22 < 0.01'},
+{'code': 'ans = abs(calculate_celcius(30)) - -1.11 < 0.01'},
+{'code': 'ans = abs(calculate_celcius(0))'},
+]
+</question>
+
+<question pythonic>
+csq_prompt = r'Write the following math expression in python: $(\frac{1}{2})^3$<br/>'
+csq_soln = "(1/2)**3"
+def csq_check_function(sub, sol):
+  return sub == eval(sol)
+</question>
+
+<section>Type Converters</section>
+
+One more thing: Sometimes you want to add a number to a string but can't because
+they aren't the same type. For example you might have the following variables:
+- `message = "Number of water bottles drank:"`
+- `bottles = 5`
+
+here, `message` is a string (`str`) and `bottles` is an integer (`int`). We
+might want to concatenate `5` to the message, but can't yet!
+
+Introducing: type converters! 
+
+Use the `str()` and `int()` **functions** (more on functions later) to convert
+between datatypes. For example:
+- `str(5) = "5"`
+- `int("5") = 5`
+
+Now you can write something like `message = message + str(bottles)` to reassign
+the `message` variable to hold the string `"Number of water bottles drank: 5"`!
+
+Note, that you also have access to the `float()` and `bool()` converters.
+Here are some examples:
+- `float(5) = 5.0`
+- `float("5") = 5.0`
+- `float(True) = 1.0`
+- `bool(1) = True`
+- `bool(0) = False`
+- `bool(-5.0) = True`
+- `bool("") = False`
+- `bool("hi") = True`
+
+Note that for numbers in `bool()`, only `0` evaluates to `False`. The rest of
+the numbers evaluate to `True`. For strings, the empty string `""` evaluates to
+`False`, but all other strings with at least one character evaluate to `True`.
+What values of different datatypes evaluate to `True` or `False is actually
+known as the
+["truthy"](https://stackoverflow.com/questions/39983695/what-is-truthy-and-falsy-how-is-it-different-from-true-and-false)
+or "falsey" (actual names, lol) values. More on this in the next lesson once we
+cover conditionals. 
+
+
+<section>Check-in Questions</section>
+
+<question multiplechoice>
+csq_renderer = 'radio'
+csq_prompt="""Given that `age` is currently a variable set the string `"28"`,
+  which of these would reassign `age` to the **integer** `28`?
+"""
+csq_options=['`age = float(age)`', '`age = str(age)`', '`age = bool(age)`', '`age = int(age)`']
+csq_soln = 3
+csq_soln_mode = 'index'
+csq_explanation = "you'll need to use `int()` !"
+</question>
+
+<section>Final Project: calculate_stats</section>
+
+Taking things back to the real life, let's use python to some statistics about
+run given the number of miles you ran (expressed as a float), and the number of
+minutes and seconds (both integers) you ran for. Specifically, given these
+numbers stored in variables `miles`, `minutes`, and `seconds`, you will
+calculate:
+
+- Your `miles_pace` (that's **minutes** per **mile**)
+- `num_kilometers`: The numer of kilometers you've ran (**Hint:** 1 mi = 1.61 km)
+- `mph`: Your MPH, miles per hour
+- `is_faster_than_a_capybara`: Whether or not your mph is faster than a capybara, which run **22mph** (this
+will be a boolean btw!)
+
+<question pythoncode>
+csq_prompt = """Finish the **`calculate_stats(miles, minutes, seconds)`**
+  function that calculates some stats about your run.
+
+  **Tip:** Remember to use the actual variables, like `miles`, to write your
+  expression.
+"""
+csq_initial = """def calculate_stats(miles: float, minutes: int, secs: int) -> tuple[float, float, float, bool]:
+  miles_pace = # <-- fill out
+  num_kilometers = # <-- fill out
+  mph = # <-- fill out
+  is_faster_than_a_capybara = # <-- fill out
+
+  # Leave the following as is:
+  print(f"You ran {miles} miles. That's {num_kilometers} kilometers!")
+  print(f"You kept a {miles_pace} mile pace!")
+  print(f"You ran at {mph}MPH. Is this faster than a capybara --> {is_faster_than_a_capybara}")
+  return miles_pace, num_kilometers, mph, is_faster_than_a_capybara
+"""
+csq_soln = """def calculate_stats(miles: float, minutes: int, secs: int):
+  miles_pace = (minutes + secs/60) / miles
+  num_kilometers = 1.61 * miles
+  mph = miles / (minutes/60 + secs/3600)# <-- fill out
+  is_faster_than_a_capybara = mph > 22 # <-- fill out
+
+  # Leave the following as is:
+  print(f"You ran {miles} miles. That's {num_kilometers} kilometers!")
+  print(f"You kept a {miles_pace} mile pace!")
+  print(f"You ran at {mph}MPH. Is this faster than a capybara --> {is_faster_than_a_capybara}")
+  return miles_pace, num_kilometers, mph, is_faster_than_a_capybara"""
+csq_npoints = 3
+
+csq_tests = [
+{'code': 'ans = calculate_stats(1, 8, 5)'},
+{'code': 'ans = calculate_stats(10, 80, 30)'},
+{'code': 'ans = calculate_stats(12, 120, 3600)'},
+]
+</question>
+
+<section>Key Takeaways</section>
+Congrats! You've just used python to calculate some metrics about your run! But
+the fun doesn't have to end here. Start using python as a calculator for
+everything - it's much more powerful than those apps. To do so, follow these
+steps:
+
+1) On mac or windows, open up the `Terminal` application
+2) Once on the black screen, type in `python` and hit `ENTER`
+3) You are now operating in the python shell! The shell runs the python
+interpretor - a program whose job it is to "interpret" your commands into python
+code, convert them into machine code (binary numbers) that your computer's CPU
+understands, and execute them. Try typing `name = "Andre"`, hit `ENTER`, then
+type `"Hello" + name`!
+
+<img src="CURRENT/terminal.png" alt="terminal" style="max-height:400px;">
+
+Today you learned what the primitive datatypes are (`int`, `float`, `bool`,
+and `str`), what operations you can run on them (`+`, `-`, `*`, `/`, `**`, `==`, `>`, `<`, `<=`, `>=`),
+and how to convert between them (`int()`, `str()`, `bool()`, `float()`).
+
+You used this knowledge to calculate some stats about your run, helping you achieve your next PR! 
+
+
+<img src="CURRENT/5K_PR.jpeg" alt="5k" style="max-height:400px;">
+
+Well done!! 👏👏👏
