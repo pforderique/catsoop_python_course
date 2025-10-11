@@ -71,6 +71,17 @@ csq_explanation = "Use `.append()` to add an item to the end of a list."
 
 ---
 
+<section>Removing Items</section>
+
+You can also remove items with `.remove()` or `.pop()`:
+```python
+purchases.remove(89.75)  # removes the first occurrence of 89.75
+purchases.pop(0)         # removes the item at index 0 (first item)
+purchases.pop()          # removes the last item by default, if no index is given
+```
+
+---
+
 <section>Loops</section>
 
 Now that you have a list, how do you *use* it? Enter **loops**.
@@ -108,6 +119,29 @@ Output:
 ```
 
 That’s the sum of all your purchases!
+
+<question pythoncode>
+csq_prompt = """Write a function called `length(lst)` that takes a list `lst` and returns the number of items in it."""
+csq_initial = """def length(lst: list) -> int:
+    # your code here
+    return 0  # placeholder
+"""
+csq_soln = """def length(lst):
+    count = 0
+    for _ in lst:
+        count += 1
+    return count
+"""
+csq_npoints = 2
+csq_tests = [
+    {'code': 'ans = length([1,2,3]) == 3'},
+    {'code': 'ans = length([]) == 0'},
+    {'code': 'ans = length([10]) == 1'}
+]
+</question>
+
+Note: this function is SO important, that Python has a built-in function version called `len()`!
+Try replacing your `length()` implementation by just returning `len(lst)` instead!
 
 ---
 
