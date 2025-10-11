@@ -1,0 +1,242 @@
+<section>Intro</section>
+
+Welcome to **Lesson 2: “Cleared for Takeoff ✈️”** — time to lift off and learn how to make your code *think for itself*!  
+
+In this lesson, you'll learn how Python makes **decisions** — just like a drone deciding whether it’s safe to fly, hover, or return home.  
+By the end, you’ll have your own **Drone Flight Controller** that checks conditions and tells your drone what to do.  
+
+---
+
+<section>Scenario</section>
+
+You’re testing out your new drone before filming an epic aerial video of your condo 🏙️ to help get that bitch sold.
+
+Before you take off, though, you need to check the conditions:  
+- Is the **battery** charged enough?  
+- Is the **wind speed** safe?  
+- Is the **weather** clear?  
+
+Your drone’s flight computer (a.k.a. Python) will make these checks automatically.  
+Let’s teach it how!
+
+---
+
+<section>If Statements</section>
+
+In Python, we use **if statements** to make decisions.
+
+```python
+if condition:
+    # do something
+```
+
+If the condition is `True`, the code inside the block runs.
+Otherwise, it skips over it — just like how your drone won’t take off unless the flight conditions are perfect.
+
+Example:
+```python
+battery_level = 80
+
+if battery_level > 50:
+    print("Battery sufficient — ready for takeoff!")
+```
+
+Output:
+```
+Battery sufficient — ready for takeoff!
+```
+
+But what if the battery is low? Let’s handle that too.
+```python
+battery_level = 20
+
+if battery_level > 50:
+    print("Battery sufficient — ready for takeoff!")
+else:
+    print("Battery too low — needs to charge first.")
+```
+
+<section>Check-in Questions</section>
+
+<question multiplechoice>
+csq_prompt = "What will this code print if `battery_level = 40`?"
+csq_options = [ "Battery sufficient — needs to charge first.", "Battery too low — returning to base." ]
+csq_soln = 1
+csq_explanation = "Since 40 is not greater than 50, the condition is False and the else block runs."
+</question>
+
+<section>elif (Else If)</section>
+
+Sometimes there are multiple flight conditions to check — for example, maybe you’ll hover instead of landing.
+
+That’s where elif comes in:
+
+```python
+wind_speed = 15
+
+if wind_speed < 10:
+    print("Takeoff approved!")
+elif wind_speed < 20:
+    print("Windy — hover mode only.")
+else:
+    print("Too windy — grounded.")
+```
+
+<section>Logical Operators</section>
+
+You can combine multiple conditions using:
+
+and — all must be True
+
+or — at least one must be True
+
+not — reverses the condition
+
+Example:
+
+```python
+battery = 85
+wind = 8
+weather = "clear"
+
+if battery > 50 and wind < 10 and weather == "clear":
+    print("Takeoff approved ✅")
+else:
+    print("Conditions unsafe ❌")
+```
+
+<section>Check-in Questions</section>
+<question multiplechoice>
+csq_prompt = """If `battery = 40`, `wind = 8`, and `weather = "clear"`, what happens?"""
+csq_options = [ "Takeoff approved ✅", "Conditions unsafe ❌" ]
+csq_soln = 1
+csq_explanation = "Since battery (40) is not greater than 50, the whole 'and' condition fails."
+</question>
+
+<question smallbox>
+csq_prompt = "In your own words, what does the `and` keyword mean in Python?"
+csq_soln = "both conditions must be true"
+csq_check_function = lambda sub, sol: any(x in sub.lower() for x in ["both", "all", "true"])
+csq_explanation = "`and` requires all conditions to evaluate to True."
+</question>
+
+---
+
+<section>Comparison Operators</section>
+
+Here’s a quick reference for comparisons:
+
+| Operator | Meaning               | Example              | Result |
+| -------- | --------------------- | -------------------- | ------ |
+| `>`      | greater than          | `10 > 5`             | True   |
+| `<`      | less than             | `3 < 7`              | True   |
+| `==`     | equal to              | `"drone" == "drone"` | True   |
+| `!=`     | not equal to          | `"rain" != "clear"`  | True   |
+| `>=`     | greater than or equal | `10 >= 10`           | True   |
+| `<=`     | less than or equal    | `5 <= 8`             | True   |
+
+---
+<section>Check-in Questions</section>
+<question multiplechoice>
+csq_renderer = 'radio'
+csq_prompt = 'Which operator checks if two values are equal?'
+csq_options = ['`=`', '`==`', '`!=`', '`equals()`']
+csq_soln = 1
+csq_soln_mode = 'index'
+csq_explanation = "A single `=` assigns values, double `==` checks for equality."
+</question>
+
+<question multiplechoice>
+csq_renderer = 'radio'
+csq_prompt = '`not (True and False)` evaluates to...?'
+csq_options = ['True', 'False']
+csq_soln = 0
+csq_soln_mode = 'index'
+csq_explanation = "True and False is False, and not False flips it to True."
+</question>
+
+---
+
+<section>Mini Challenge</section>
+
+Alright pilot — time for a quick simulation.
+
+<question pythoncode>
+csq_prompt = """Write a small program that:
+1. Sets a `battery_level` (integer)
+2. Prints "Takeoff!" if battery is **above 75**
+3. Prints "Hover mode" if between **50 and 75**
+4. Prints "Land immediately!" otherwise
+"""
+csq_initial = """battery_level = # your value here
+
+# write your if/elif/else below!"""
+
+csq_soln = """battery_level = 60
+
+if battery_level > 75:
+print("Takeoff!")
+elif battery_level >= 50:
+print("Hover mode")
+else:
+print("Land immediately!")
+"""
+</question>
+
+---
+
+<section>Final Project: Drone Flight Controller</section>
+
+Time to combine everything! ✈️
+
+You’ll write a drone_controller() function that decides if your drone should take off, hover, or return to base depending on:
+
+* battery (int, 0–100)
+* wind_speed (int, mph)
+* weather (string: "clear", "rainy", "foggy")
+
+Rules:
+
+* If battery < 30 → "Return to base 🚨"
+* If weather is not clear → "Hold position ⛅"
+* If wind > 15 → "Hover mode 🌀"
+
+Otherwise → "Takeoff approved ✅"
+
+<question pythoncode>
+csq_prompt = """Finish the function **`drone_controller(battery, wind_speed, weather)`** following the above rules. """
+csq_initial = """def drone_controller(battery, wind_speed, weather): 
+  # your logic here!
+  return # string message
+"""
+csq_soln = """def drone_controller(battery, wind_speed, weather):
+  if battery < 30: return "Return to base 🚨"
+  elif weather != "clear": return "Hold position ⛅"
+  elif wind_speed > 15: return "Hover mode 🌀"
+  else: return "Takeoff approved ✅"
+"""
+csq_tests = [ 
+  {'code': 'ans = drone_controller(80, 5, "clear")'},
+  {'code': 'ans = drone_controller(20, 5, "clear")'},
+  {'code': 'ans = drone_controller(90, 18, "clear")'},
+  {'code': 'ans = drone_controller(70, 8, "rainy")'},
+]
+</question>
+
+---
+
+<section>Key Takeaways</section>
+
+Great flight, Captain @{cs_username}! 🛫
+
+Today you learned:
+
+* How to use if, elif, and else for decision-making
+* How comparison operators (>, <, ==, etc.) work
+* How to combine conditions with and, or, and not
+
+These tools let your programs “think” — a big step toward real-world automation!
+
+Next up: we’ll learn how to package logic into functions so you can reuse it easily, just like Excel formulas.
+
+Prepare for **Lesson 3: “Charging Up the Battery”** ⚡ — see you on the runway!
