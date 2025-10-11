@@ -1,0 +1,1 @@
+cs_long_name = "Lesson 2: Cleared for Takeoff ✈️"
