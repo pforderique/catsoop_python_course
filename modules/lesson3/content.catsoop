@@ -1,0 +1,239 @@
+<section>Intro</section>
+
+Welcome to **Lesson 3: “You make my code go round right round”** — today you’ll learn how to make your code *repeat itself* and handle *lists of data*! 🔁
+
+So far, you’ve worked with single numbers or strings. But what if you had a **bunch** of values — like all your recent purchases or all your mile splits from a run?
+That’s where **lists** and **loops** come in.
+
+---
+
+<section>Scenario</section>
+
+You’ve been racking up credit card points like a pro 💳. But calculating them manually for every purchase? Boring.
+Let’s automate that using **lists** to store your purchases and **loops** to calculate total reward points.
+
+By the end of this lesson, you’ll have your very own **Credit Card Points Simulator!** 🪙
+
+---
+
+<section>What Are Lists?</section>
+
+A **list** stores multiple items in a single variable.
+
+```python
+purchases = [120.50, 15.99, 230.10, 89.75]
+```
+
+You can access specific items using **indexes** (starting at 0):
+
+```python
+print(purchases[0])  # first item → 120.50
+print(purchases[2])  # third item → 230.10
+```
+
+You can even change a value:
+
+```python
+purchases[1] = 18.99
+```
+
+And add new ones:
+
+```python
+purchases.append(42.75)
+```
+
+Now the list looks like:
+
+```python
+[120.5, 18.99, 230.1, 89.75, 42.75]
+```
+
+---
+
+<section>Check-in Questions</section>
+
+<question multiplechoice>
+csq_prompt = "What index represents the *first* item in a Python list?"
+csq_options = ["0", "1", "first", "None"]
+csq_soln = 0
+csq_soln_mode = "index"
+csq_explanation = "Python lists start counting from 0!"
+</question>
+
+<question multiplechoice>
+csq_prompt = "Which of the following adds a new item to a list?"
+csq_options = ["list.add()", "list.append()", "list.insert()", "list.put()"]
+csq_soln = 1
+csq_soln_mode = "index"
+csq_explanation = "Use `.append()` to add an item to the end of a list."
+</question>
+
+---
+
+<section>Loops</section>
+
+Now that you have a list, how do you *use* it? Enter **loops**.
+A loop lets your code repeat something for each item in a list.
+
+```python
+purchases = [120.5, 15.99, 230.1]
+
+for purchase in purchases:
+    print(purchase)
+```
+
+Output:
+
+```
+120.5
+15.99
+230.1
+```
+
+You can even keep a running total:
+
+```python
+total = 0
+for purchase in purchases:
+    total = total + purchase
+
+print(total)
+```
+
+Output:
+
+```
+366.59
+```
+
+That’s the sum of all your purchases!
+
+---
+
+<section>While Loops</section>
+
+There’s another kind of loop: `while`. It repeats *while* a condition is true.
+
+Example:
+
+```python
+count = 0
+while count < 5:
+    print("Looping...")
+    count = count + 1
+```
+
+This prints “Looping...” five times.
+
+<question multiplechoice>
+csq_prompt = "Imagine you needed to iterate until some condition is true, but dont know how many iterations it will take. Should you use a for loop or while loop?"
+csq_options = [ "for loop!", "while loop!" ]
+csq_soln = 0
+csq_explanation = "Use a while loop when you dont know how many iterations it will take to meet the condition."
+</question>
+
+You’ll use `for` loops most of the time, but `while` loops are great when you don’t know how many times you’ll need to repeat something.
+
+---
+
+<section>Mini Challenge</section>
+
+<question pythoncode>
+csq_prompt = """Given a list called `nums`, use a `for` loop to print each number **multiplied by 2**.
+For example, if `nums = [1, 2, 3]`, it should print `2`, `4`, and `6`.
+"""
+csq_initial = """nums = [5, 10, 15, 20]
+
+# your loop here!
+
+"""
+csq_soln = """nums = [5, 10, 15, 20]
+for n in nums:
+print(n * 2)
+"""
+csq_npoints = 2
+
+csq_tests = [
+{'code': 'ans = True'}
+] </question>
+
+---
+
+<section>Combining Loops and Conditionals</section>
+
+Don't forget about **conditionals**! You can combine them with loops to make decisions for each item.
+
+Example: Only print out purchases over $100.
+```python
+purchases = [1.99, 150.00, 75.50, 200.00]
+
+for purchase in purchases:
+    if purchase > 100:
+        print(purchase)
+```
+
+---
+
+<section>Final Project: Credit Card Points Simulator</section>
+
+Now it’s time to put those loops to work! 💳
+
+You’ll create a **`calculate_points(purchases)`** function that takes in a list of purchase amounts and returns the total number of reward points earned.
+
+Rules:
+
+* Purchases under $50 earn 1 point per dollar
+* Purchases between $50–$100 earn 1.5 points per dollar
+* Purchases over $100 earn 2 points per dollar
+
+<question pythoncode>
+csq_prompt = """Finish the **`calculate_points(purchases)`** function following the rules above.
+"""
+csq_initial = """def calculate_points(purchases: list[float]) -> float:
+  total_points = 0
+  # loop through each purchase
+  # calculate points based on amount
+  # add to total_points
+
+print(f"Total Points Earned: {total_points}")
+return total_points
+"""
+csq_soln = """def calculate_points(purchases: list[float]) -> float:
+total_points = 0
+for purchase in purchases:
+if purchase < 50:
+total_points += purchase * 1
+elif purchase <= 100:
+total_points += purchase * 1.5
+else:
+total_points += purchase * 2
+
+```
+print(f"Total Points Earned: {total_points}")
+return total_points
+```
+
+"""
+csq_npoints = 3
+
+csq_tests = [
+{'code': 'ans = calculate_points([10, 60, 200])'},
+{'code': 'ans = calculate_points([50, 75])'},
+{'code': 'ans = calculate_points([120])'}
+] </question>
+
+---
+
+<section>Key Takeaways</section>
+
+You did it! 🌀
+Today you learned:
+
+* How to store multiple items in a **list**
+* How to loop through them using `for` and `while`
+* How to combine loops with conditionals to calculate results
+
+Next up: we’ll use these skills to build **Excel-style formulas** like `SUM()`, `AVERAGE()`, and `MAX()` — all written in Python!
+
+Get ready for **Lesson 4: “Make your own Excel!”** 📊

@@ -30,6 +30,7 @@ cs_top_menu = [
             {"text": "Lesson 0: Syllabus Day", "link": "COURSE/modules/lesson0"},
             {"text": "Lesson 1: Data Types", "link": "COURSE/modules/lesson1"},
             {"text": "Lesson 2: Control Flow", "link": "COURSE/modules/lesson2"},
+            {"text": "Lesson 3: Loops", "link": "COURSE/modules/lesson3"},
         ]
     },
     {
