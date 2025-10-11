@@ -1,0 +1,63 @@
+name: Deploy CAT-SOOP Course to GCP VM
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.GCLOUD_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Ensure VM SSH access and update course
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.GCLOUD_SSH_KEY }}
+          script: |
+            set -eux
+            # Ensure .ssh directory exists
+            mkdir -p ~/.ssh
+            chmod 700 ~/.ssh
+
+            # Add our deploy key to authorized_keys if missing
+            PUB_KEY="$(ssh-keygen -y -f <(echo '${{ secrets.GCLOUD_SSH_KEY }}'))"
+            grep -q "$PUB_KEY" ~/.ssh/authorized_keys || echo "$PUB_KEY" >> ~/.ssh/authorized_keys
+
+            # Ensure course directory exists and is writable
+            sudo mkdir -p /opt/catsoop/courses/python_course
+            sudo chown -R $USER:$USER /opt/catsoop/courses/python_course
+
+            # Pull latest updates
+            cd /opt/catsoop/courses/python_course
+            if [ -d .git ]; then
+              git fetch origin main
+              git reset --hard origin/main
+            else
+              git clone https://github.com/pforderique/catsoop_python_course.git .
+            fi
+
+            echo "✅ Course updated successfully!"
+
+      - name: Restart CAT-SOOP
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.GCLOUD_SSH_KEY }}
+          script: |
+            sudo systemctl restart catsoop
+            echo "🔄 CAT-SOOP restarted successfully!"
