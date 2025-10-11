@@ -2,8 +2,7 @@ name: Deploy CAT-SOOP Course to GCP VM
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -21,7 +20,13 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Ensure VM SSH access and update course
+      - name: Inject public key into VM (if missing)
+        run: |
+          PUB_KEY=$(ssh-keygen -y -f ~/.ssh/id_ed25519)
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} \
+            "mkdir -p ~/.ssh && chmod 700 ~/.ssh && grep -qxF '$PUB_KEY' ~/.ssh/authorized_keys || echo '$PUB_KEY' >> ~/.ssh/authorized_keys"
+
+      - name: Pull latest course code
         uses: appleboy/ssh-action@v1.1.0
         with:
           host: ${{ secrets.VM_HOST }}
@@ -29,19 +34,8 @@ jobs:
           key: ${{ secrets.GCLOUD_SSH_KEY }}
           script: |
             set -eux
-            # Ensure .ssh directory exists
-            mkdir -p ~/.ssh
-            chmod 700 ~/.ssh
-
-            # Add our deploy key to authorized_keys if missing
-            PUB_KEY="$(ssh-keygen -y -f <(echo '${{ secrets.GCLOUD_SSH_KEY }}'))"
-            grep -q "$PUB_KEY" ~/.ssh/authorized_keys || echo "$PUB_KEY" >> ~/.ssh/authorized_keys
-
-            # Ensure course directory exists and is writable
             sudo mkdir -p /opt/catsoop/courses/python_course
             sudo chown -R $USER:$USER /opt/catsoop/courses/python_course
-
-            # Pull latest updates
             cd /opt/catsoop/courses/python_course
             if [ -d .git ]; then
               git fetch origin main
@@ -49,8 +43,7 @@ jobs:
             else
               git clone https://github.com/pforderique/catsoop_python_course.git .
             fi
-
-            echo "✅ Course updated successfully!"
+            echo "✅ Updated course successfully."
 
       - name: Restart CAT-SOOP
         uses: appleboy/ssh-action@v1.1.0
