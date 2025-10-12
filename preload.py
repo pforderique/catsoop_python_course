@@ -33,6 +33,7 @@ cs_top_menu = [
             {"text": "Lesson 3: Lists and Loops", "link": "COURSE/modules/lesson3"},
             {"text": "Lesson 4: Functions", "link": "COURSE/modules/lesson4"},
             {"text": "Lesson 5: Dictionaries", "link": "COURSE/modules/lesson5"},
+            {"text": "Lesson 6: Math and Loops II", "link": "COURSE/modules/lesson6"},
         ]
     },
     {

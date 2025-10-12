@@ -1,0 +1,1 @@
+cs_long_name = "Lessson 6: Mortgage Mode Unlocked"

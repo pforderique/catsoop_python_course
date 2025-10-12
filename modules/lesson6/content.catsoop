@@ -1,0 +1,357 @@
+<section>Intro</section>
+
+Welcome to **Lesson 6: “Mortgage Mode Unlocked”** 🏠💰
+Today you’ll learn how to take your Python skills and apply them to something *real*: calculating mortgage payments, loan interest, and financial growth.
+
+Along the way, we’ll also explore **user input**, the **`math` library**, and some advanced loop tricks like **`break`** and **`continue`**.
+
+---
+
+<section>Scenario</section>
+
+You're thinking about selling your condo 🏢 and buying a new house. You want to estimate monthly mortgage payments and total interest before signing anything. Instead of using a clunky online calculator, let’s make our own — in Python!
+
+We’ll walk through the formulas step by step and build toward a complete **Mini Mortgage Calculator**.
+
+---
+
+<section>Getting User Input</section>
+
+In Python, you can ask the user for input with the `input()` function. It always returns a **string**, so you’ll often need to convert it.
+
+```python
+name = input("What's your name? ")
+loan = float(input("Enter your loan amount: "))
+print(f"Hi {name}, your loan is ${loan}.")
+```
+
+Try running this in the interpreter — Python will pause and wait for your input!
+
+(Hint: As a reminder, you can bring up the interpreter by opening your terminal
+application and typing `python` or `python3`. Then copy and paste the code above.)
+
+<img src="CURRENT/terminal_input.png" alt="terminal_input" style="max-height:400px;">
+
+---
+
+<section>Introducing the math Library</section>
+
+Python’s built-in **`math`** module gives you access to tons of useful functions:
+
+```python
+import math
+
+print(math.sqrt(16))   # 4.0
+print(math.pow(2, 3))  # 8.0
+print(math.ceil(2.3))  # 3
+print(math.floor(2.9)) # 2
+```
+
+A few other useful ones include:
+
+* `math.pi` → 3.14159...
+* `math.exp(x)` → e^x
+* `math.log(x)` → natural log of x
+
+You’ll use these to calculate interest and payments later.
+
+<question multiplechoice>
+csq_prompt = """How would you represent the expression $\\sqrt{e^x}$ in Python using the `math` module?"""
+csq_options = [
+    "math.exp(math.sqrt(x))",
+    "math.pow(math.e, x)",
+    "math.sqrt(x) * math.exp(x)",
+    "math.sqrt(math.exp(x))",
+]
+csq_soln = 3
+csq_soln_mode = "index"
+csq_explanation = "math.exp(x) computes $e^x$, and math.sqrt() takes the square root."
+</question>
+
+---
+
+<section>More on Loops: range()</section>
+
+You already know how to write loops like so:
+
+```python
+numbers = [1, 2, 3, 4, 5]
+# prints each number, one per line
+for num in numbers:
+    print(num)
+```
+
+but now we’ll learn to have more control over our iteration.
+
+**range()** is another important built-in function that generates a sequence of
+numbers. `range(x)` generates numbers from `0` to `x` **exclusive**. This means
+that
+
+```python
+for i in range(5):
+    print(i)
+```
+
+will print numbers from `0` to `4` (but not `5`!):
+```
+0
+1
+2
+3
+4
+```
+
+This can be useful when you want to loop a specific number of times, or access list indices.
+
+```python
+fruits = ["apple", "banana", "cherry"]
+for i in range(len(fruits)):
+    print(f"{i}: {fruits[i]}")
+```
+Output:
+```
+0: apple
+1: banana
+2: cherry
+```
+
+Optionally, the `range` function can also take a start and step:
+
+```python
+# starting at 1, up to (but not including) 10, stepping by 2
+for i in range(1, 10, 2):
+    print(i)
+```
+Output:
+```
+1
+3
+5
+7
+9
+```
+
+<question multiplechoice>
+csq_prompt = """What does the following code print?
+```python
+for i in range(2, 5):
+    print(i)
+```
+Note: if no step is given, it defaults to 1.
+"""
+csq_renderer = 'radio'
+csq_options = [
+    "2 3 4 5",
+    "2 3 4",
+    "3 4 5",
+    "3 4",
+]
+csq_soln = 1
+csq_soln_mode = "index"
+csq_explanation = "range(2, 5) generates numbers starting at 2 up to (but not including) 5."
+</question>
+
+---
+
+<section>More on Loops: continue and break</section>
+
+Sometimes you want to control the flow of a loop even more.
+Two keywords that help with this are **`break`** and **`continue`**:
+
+* **`break`** stops a loop entirely.
+* **`continue`** skips to the next iteration.
+
+Example:
+
+```python
+for i in range(10):
+    if i == 5:
+        break  # stops the loop
+    print(i)
+```
+
+Output:
+
+```
+0
+1
+2
+3
+4
+```
+
+Note how it stops before printing `5`, even though the loop would normally go to `9`.
+
+And with `continue`:
+
+```python
+for i in range(5):
+    if i == 2:
+        continue  # skips 2
+    print(i)
+```
+
+Output:
+
+```
+0
+1
+3
+4
+```
+
+Note how it skips `2` but continues with the rest of the loop.
+
+These will be handy later when we let users retry or stop a simulation.
+
+<question multiplechoice>
+csq_prompt = """What does the following code print?
+```python
+fruits = ["apple", "banana", "cherry", "date"]
+for i in range(len(fruits)):
+    if fruits[i] == "banana":
+        continue
+    print(fruits[i])
+```
+"""
+csq_renderer = 'radio'
+csq_options = [
+    "apple banana cherry date",
+    "apple cherry date",
+    "banana cherry date",
+    "banana",
+]
+csq_soln = 1
+csq_soln_mode = "index"
+csq_explanation = "The loop skips 'banana' due to the continue statement, printing the other fruits."
+</question>
+
+---
+
+<section>Mini Challenge</section>
+
+<question pythoncode>
+csq_prompt = """Ask the user to enter a positive number. Keep asking until they do!
+Use a `while` loop and `break`.
+"""
+csq_initial = """while True:
+  num = float(input("Enter a positive number: "))
+  # if positive, break the loop
+  # otherwise, print a message and continue asking
+"""
+csq_soln = """while True:
+    num = float(input("Enter a positive number: "))
+    if num > 0:
+        print(f"Thanks! You entered {num}.")
+        break
+    else:
+        print("That’s not positive — try again!")
+"""
+csq_npoints = 2
+
+csq_tests = [
+    {'code': 'ans = True'}
+]
+</question>
+
+---
+
+<section>Mortgage Math 101</section>
+
+Now for the fun part: the math behind mortgages! 🏡
+Here’s the formula to calculate a fixed monthly mortgage payment:
+
+
+$ M = P \times \frac{r(1 + r)^n}{(1 + r)^n - 1} $
+
+Where:
+
+* **P** = loan principal
+* **r** = monthly interest rate (annual rate / 12)
+* **n** = total number of payments (months) (so for a 30-year loan, n = 30 * 12 = 360)
+
+Let’s code it!
+
+<question pythoncode>
+csq_prompt = """Write a function **`monthly_payment(principal, annual_rate, years)`** that calculates and returns the monthly payment.
+Hint: Use the formula above and `math.pow()`.
+"""
+csq_initial = """import math
+
+def monthly_payment(principal: float, annual_rate: float, years: int) -> float:
+    r = annual_rate / 12 / 100
+    n = years * 12
+
+    # use formula to calculate M
+
+    return # <-- your expression here
+"""
+csq_soln = """import math
+
+def monthly_payment(principal: float, annual_rate: float, years: int) -> float:
+  r = annual_rate / 12 / 100  # convert annual percent to monthly decimal
+  n = years * 12
+  M = principal * (r * math.pow(1 + r, n)) / (math.pow(1 + r, n) - 1)
+  return M
+"""
+csq_npoints = 3
+
+csq_tests = [
+    {'code': 'ans = abs(monthly_payment(300000, 5, 30) - 1610.46) < 1'},
+    {'code': 'ans = abs(monthly_payment(200000, 4, 15) - 1479.38) < 1'}
+]
+</question>
+
+---
+
+<section>Final Project: Mini Mortgage Calculator</section>
+
+Now let’s tie everything together! 🏡
+You’ll create a program that:
+
+1. Asks the user for **loan amount**, **annual interest rate**, and **loan term (years)**.
+2. Calculates monthly payments using your function above.
+3. Prints out the monthly payment
+
+<question pythoncode>
+csq_prompt = """Finish the **`mortgage_calculator()`** function that:
+- asks for user inputs,
+- calls `monthly_payment()`,
+- prints total cost and interest,
+- and allows the user to type `'q'` to quit.
+"""
+csq_initial = """def mortgage_calculator():
+  while True:
+    loan_str = input("Enter loan amount (or 'q' to quit): ")
+    if loan_str == 'q':
+      print("Exiting calculator...")
+      break
+
+    # your code here
+    # 1. convert loan_str to float
+    # 2. get annual rate and years from user and convert those too
+    # 3. call monthly_payment()
+    # 4. print out the monthly payment
+
+"""
+csq_soln = """def mortgage_calculator():
+    pass
+"""
+csq_npoints = 3
+
+csq_tests = [
+    {'code': 'ans = True'}
+]
+</question>
+
+---
+
+<section>Key Takeaways</section>
+
+Nice work, @{cs_username}! 🎉
+You’ve now:
+
+* Collected and converted user input
+* Used the **math library** for real formulas
+* Practiced `for` and `while` loops with `break` and `continue`
+* Built a fully functional **mortgage calculator**
