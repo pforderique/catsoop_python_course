@@ -1,0 +1,218 @@
+<section>Intro</section>
+
+Welcome to **Lesson 5: “Virtual Cookbook”** 🍳 — time to get cooking with data!
+In this lesson, we’ll introduce **dictionaries**, one of the most powerful data structures in Python.
+
+A **dictionary** lets you store data in pairs — a **key** and a **value** — just like a real-world dictionary maps a word to its definition.
+
+By the end of this lesson, you’ll use dictionaries to build your own **virtual cookbook**, where each dish is mapped to its ingredients (and later, its price!).
+
+---
+
+<section>Scenario</section>
+
+You’re setting up a digital grocery store for your cooking adventures.
+Each item has a name and a price — sounds like a perfect use case for a Python dictionary! 🥦
+
+We’ll start simple, building a dictionary of grocery items and prices, then end with a project where you calculate the total price of recipes based on their ingredients.
+
+---
+
+<section>What Are Dictionaries?</section>
+
+A **dictionary** in Python stores key–value pairs inside curly braces `{}`.
+
+```python
+grocery_store = {
+    "apple": 1.25,
+    "banana": 0.75,
+    "chicken": 6.50
+}
+```
+
+Each **key** (like `"apple"`) maps to a **value** (like `1.25`).
+
+You can access items like this:
+
+```python
+print(grocery_store["apple"])  # 1.25
+```
+
+You can add or update keys too:
+
+```python
+grocery_store["milk"] = 3.49  # add new item
+grocery_store["banana"] = 0.80  # update existing item
+```
+
+And remove keys:
+
+```python
+del grocery_store["chicken"]
+```
+
+---
+
+<section>Common Dictionary Methods</section>
+
+Dictionaries have a few handy methods:
+
+| Method               | Description        | Example                                                                     |
+| -------------------- | ------------------ | --------------------------------------------------------------------------- |
+| `.keys()`            | returns all keys   | `grocery_store.keys()` → `dict_keys(['apple', 'banana'])`                   |
+| `.values()`          | returns all values | `grocery_store.values()` → `dict_values([1.25, 0.75])`                      |
+| `.items()`           | returns (key, value) pairs      | `grocery_store.items()` → `dict_items([('apple', 1.25), ('banana', 0.75)])` |
+| `.get(key, default)` | safely get a value | `grocery_store.get('steak', -1)` → `-1`, assuming 'steak' not in dict         |
+
+---
+
+<section>Check-in Questions</section>
+
+<question multiplechoice>
+csq_prompt = "What data structure stores key–value pairs in Python?"
+csq_options = ["List", "Tuple", "Dictionary", "Set"]
+csq_soln = 2
+csq_soln_mode = "index"
+csq_explanation = "Dictionaries are the key–value pair data structure in Python."
+</question>
+
+<question multiplechoice>
+csq_prompt = "How would you add a new key `'orange'` with a value of `1.99` to `grocery_store`?"
+csq_options = [
+"`grocery_store.add('orange', 1.99)`",
+"`grocery_store.append('orange', 1.99)`",
+"`grocery_store['orange'] = 1.99`",
+"`grocery_store.insert('orange', 1.99)`"
+]
+csq_soln = 2
+csq_soln_mode = "index"
+csq_explanation = "Use square brackets with assignment to add or update dictionary keys."
+</question>
+
+---
+
+<section>Looping Through Dictionaries</section>
+
+You can loop through keys, values, or both:
+
+```python
+for item in grocery_store:
+    print(item)  # prints just the keys
+```
+
+```python
+for item, price in grocery_store.items():
+    print(f"{item}: ${price}")
+```
+
+Output:
+
+```
+apple: $1.25
+banana: $0.75
+chicken: $6.5
+```
+
+---
+
+<section>Mini Challenge</section>
+
+<question pythoncode>
+csq_prompt = """Return a dictionary representing an `inventory` that has at least **3 items** and their **quantities** (integers).
+"""
+csq_initial = """def get_inventory():
+  inventory = {}
+  # add at least 3 items with quantities
+  return inventory
+"""
+csq_soln = """def get_inventory():
+    return {
+        "apple": 10,
+        "banana": 5,
+        "orange": 8
+    }
+"""
+csq_npoints = 2
+
+csq_tests = [
+    {'code': 'ans = len(get_inventory()) >= 3'},
+]
+</question>
+
+---
+
+<section>Final Project: Recipe Price Calculator</section>
+
+Time to combine everything you’ve learned! 👨‍🍳
+
+You’ll be given two dictionaries:
+
+* `grocery_store`: maps each ingredient to its price
+* `recipes`: maps each recipe name to a **list of ingredients**
+
+Your job: write a function **`calculate_recipe_prices(grocery_store, recipes)`** that returns a new dictionary called **`recipe_prices`**, where each recipe maps to its **total cost** (the sum of all its ingredient prices).
+
+Example:
+
+```python
+grocery_store = {
+  'apple': 1.25,
+  'banana': 0.75,
+  'flour': 2.50,
+  'egg': 0.50,
+  'milk': 1.75
+}
+
+recipes = {
+  'banana_pancakes': ['flour', 'egg', 'banana', 'milk'],
+  'fruit_salad': ['apple', 'banana']
+}
+```
+
+Expected output:
+
+```
+{'banana_pancakes': 5.5, 'fruit_salad': 2.0}
+```
+
+<question pythoncode>
+csq_prompt = """Finish the **`calculate_recipe_prices(grocery_store, recipes)`** function.
+It should return a dictionary mapping each recipe to its total cost.
+Assume every ingredient in `recipes` exists in `grocery_store`.
+"""
+csq_initial = """def calculate_recipe_prices(grocery_store: dict[str, float], recipes: dict[str, list[str]]) -> dict[str, float]:
+  recipe_prices = {}
+  # loop through recipes
+  # for each recipe, sum up ingredient prices
+  # store result in recipe_prices
+
+return recipe_prices
+"""
+csq_soln = """def calculate_recipe_prices(grocery_store: dict[str, float], recipes: dict[str, list[str]]) -> dict[str, float]:
+recipe_prices = {}
+for recipe, ingredients in recipes.items():
+total = 0
+for item in ingredients:
+total += grocery_store[item]
+recipe_prices[recipe] = total
+return recipe_prices
+"""
+csq_npoints = 3
+
+csq_tests = [
+{'code': 'ans = calculate_recipe_prices({"apple":1.0, "banana":2.0}, {"smoothie":["apple","banana"]})'},
+{'code': 'ans = calculate_recipe_prices({"egg":0.5,"milk":2.0,"flour":1.0}, {"pancake":["egg","milk","flour"]})'}
+] </question>
+
+---
+
+<section>Key Takeaways</section>
+
+Great job, Chef @{cs_username}! 👨‍🍳
+Today you learned:
+
+* What dictionaries are and how to use them
+* How to loop through `.keys()`, `.values()`, and `.items()`
+* How to organize and model data using key–value pairs
+
+You used dictionaries to represent a grocery store and even calculated recipe costs — that’s some serious data chef energy. 🥘
