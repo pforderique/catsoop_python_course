@@ -1,0 +1,190 @@
+<section>Intro</section>
+
+Welcome to **Lesson 4: “Make your own Excel!”** — time to become a spreadsheet sorcerer 🧙‍♂️
+Now that you know how to work with lists and loops, we can finally recreate some of your favorite Excel formulas right inside Python.
+
+By the end of this lesson, you’ll have written your own `SUM`, `AVERAGE`, `MAX`, and `MIN` formulas from scratch — and learned about some Python built-ins that do the same thing for you!
+
+---
+
+<section>Scenario</section>
+
+You’re managing a small project with weekly expenses stored in a list. Instead of typing formulas in Excel, let’s compute totals, averages, and ranges right here in Python.
+
+You’ll practice building small reusable **functions** that behave just like Excel’s most common formulas — and maybe even improve them 😉
+
+---
+
+<section>Counting Items in a List</section>
+
+Let’s start simple. Excel has a formula `=COUNT()` that counts how many items are in a range.
+In Python, we can do the same using the built-in **`len()`** function as we've
+seen previously:
+
+```python
+expenses = [120, 45, 89, 230]
+print(len(expenses))  # 4
+```
+
+Now, let's try writing some of the other common formulas ourselves!
+
+---
+
+<section>Writing Your Own SUM Function</section>
+
+The `=SUM()` function in Excel adds up all numbers in a range.
+Let’s write our own in Python!
+
+<question pythoncode>
+csq_prompt = """Finish the **`_sum(values)`** function so it returns the total of all numbers in `values`.
+"""
+csq_initial = """def _sum(values: list[float]) -> float:
+  total = 0
+  # loop through each number and add to total
+  return # <-- your answer
+"""
+csq_soln = """def _sum(values: list[float]) -> float:
+    total = 0
+    for v in values:
+        total += v
+    return total
+"""
+csq_npoints = 2
+
+csq_tests = [
+{'code': 'assert _sum([1,2,3]) == 6'},
+{'code': 'assert _sum([10,10,10]) == 30'}
+]
+</question>
+
+---
+
+<section>Average, Min, and Max</section>
+
+<question pythoncode>
+csq_prompt = """Finish the **`_average(values)`** function so it returns the average of all numbers in `values`.
+Hint: Average = Sum of values / Count of values
+"""
+csq_initial = """def _average(values: list[float]) -> float:
+  total = 0
+  # loop through each number and add to total, then divide by number of items
+  return # <-- your answer
+"""
+csq_soln = """def _average(values: list[float]) -> float:
+    return sum(values) / len(values)
+"""
+csq_npoints = 2
+
+csq_tests = [
+{'code': 'assert _average([1,2,3]) == 2.0'},
+{'code': 'assert _average([10,10,10]) == 10.0'}
+]
+</question>
+
+<question pythoncode>
+csq_prompt = """Finish the **`_max(values)`** function so it returns the maximum of all numbers in `values`.
+"""
+csq_initial = """def _max(values: list[float]) -> float:
+  total = 0
+  # loop through each number and add to total, and keep track of the largest item seen
+  return # <-- your answer
+"""
+csq_soln = """def _max(values: list[float]) -> float:
+    return max(values)
+"""
+csq_npoints = 2
+
+csq_tests = [
+{'code': 'assert _max([1,2,3]) == 3'},
+{'code': 'assert _max([10,10,10]) == 10'}
+]
+</question>
+
+<question pythoncode>
+csq_prompt = """Finish the **`_min(values)`** function so it returns the minimum of all numbers in `values`.
+"""
+csq_initial = """def _min(values: list[float]) -> float:
+  total = 0
+  # loop through each number and add to total, and keep track of the smallest item seen
+  return # <-- your answer
+"""
+csq_soln = """def _min(values: list[float]) -> float:
+    return min(values)
+"""
+csq_npoints = 2
+
+csq_tests = [
+{'code': 'assert _min([1,2,3]) == 1'},
+{'code': 'assert _min([10,10,10]) == 10'}
+]
+</question>
+
+**Great Job! 🎉**
+
+A couple of notes...
+
+Notice that your solution to `_average` relies on finding the sum of the list FIRST.
+This is a great example of how functions can build on each other to create more complex logic,
+since `_average` can just utilize your previously defined `_sum` function!
+
+Just like `len()`, these functions are so popular that Python also already has
+built-in functions for `sum()`, `min()`, and `max()` that do all of this for you!
+
+```python
+expenses = [10, 50, 30]
+print(sum(expenses))  # 90
+print(min(expenses))  # 10
+print(max(expenses))  # 50
+print(len(expenses))  # 3
+print(sum(expenses) / len(expenses))  # 30.0 (average)
+```
+
+Python has tons of built-in functions like these that make your life easier!
+Take a look at some of the most common ones [here](https://www.w3schools.com/python/python_ref_functions.asp).
+
+---
+
+<section>Final Project: New Excel Formula</section>
+
+It's your first day on the job at Microsoft Excel, and your manager has asked
+you to implement a new excel formula called `=SUM_WITHOUT_MAX()` that sums all
+numbers in a range except the largest one.
+
+Note that if there are multiple occurrences of the largest number, you should
+exclude all of them from the sum.
+
+<question pythoncode>
+csq_prompt = """Finish the **`sum_without_max(values)`** function that:
+* Takes a list of numbers `values`
+* Computes the sum of all numbers except the largest one (if there are multiple occurrences of the largest number, exclude all of them)
+* Returns the result
+
+Hint: Try to use some of the built-in functions you've learned about!
+"""
+csq_initial = """def sum_without_max(values: list[float]) -> float:
+    return # <-- your answer
+"""
+csq_soln = """def sum_without_max(values: list[float]):
+    _max = max(values)
+    return sum(v for v in values if v != _max)
+"""
+csq_npoints = 3
+
+csq_tests = [
+    {'code': 'ans = sum_without_max([1,2,3,4,5])'},
+    {'code': 'ans = sum_without_max([10,20,20,30])'},
+    {'code': 'ans = sum_without_max([5,5,5,5])'},
+] </question>
+
+---
+
+<section>Key Takeaways</section>
+
+Great job, @{cs_username}! 🎉
+Today you learned:
+
+* How to count, sum, average, and find min/max in lists
+* How to combine loops and functions to create powerful formulas
+* That Python’s built-ins like `sum()`, `len()`, `min()`, and `max()` can do all of this for you — instantly!
+
+Next up: we’ll start working with **files and Excel sheets directly** in **Lesson 5: “Excel-lent Moves”** 📂

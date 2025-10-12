@@ -31,6 +31,7 @@ cs_top_menu = [
             {"text": "Lesson 1: Data Types", "link": "COURSE/modules/lesson1"},
             {"text": "Lesson 2: Control Flow", "link": "COURSE/modules/lesson2"},
             {"text": "Lesson 3: Lists and Loops", "link": "COURSE/modules/lesson3"},
+            {"text": "Lesson 4: Functions", "link": "COURSE/modules/lesson4"},
         ]
     },
     {
