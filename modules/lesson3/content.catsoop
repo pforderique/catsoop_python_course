@@ -24,7 +24,8 @@ A **list** stores multiple items in a single variable.
 purchases = [120.50, 15.99, 230.10, 89.75]
 ```
 
-You can access specific items using **indexes** (starting at 0):
+You can access specific items using **indexes**, which in 99% of programming
+languages actually start at **0** (not 1!):
 
 ```python
 print(purchases[0])  # first item → 120.50
@@ -47,6 +48,15 @@ Now the list looks like:
 
 ```python
 [120.5, 18.99, 230.1, 89.75, 42.75]
+```
+
+Note that the last index of a list will always be **one less** than the length
+of the list, since we start counting at 0. For example, the list above has 5
+items, but the last index is 4, so we can access it with `purchases[4]`.
+
+Trying to access an index that doesn’t exist will give you an error 😔:
+```python
+print(purchases[5])  # IndexError: list index out of range
 ```
 
 ---
