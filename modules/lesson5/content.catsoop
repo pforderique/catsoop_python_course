@@ -186,23 +186,24 @@ csq_initial = """def calculate_recipe_prices(grocery_store: dict[str, float], re
   # for each recipe, sum up ingredient prices
   # store result in recipe_prices
 
-return recipe_prices
+  return recipe_prices
 """
 csq_soln = """def calculate_recipe_prices(grocery_store: dict[str, float], recipes: dict[str, list[str]]) -> dict[str, float]:
-recipe_prices = {}
-for recipe, ingredients in recipes.items():
-total = 0
-for item in ingredients:
-total += grocery_store[item]
-recipe_prices[recipe] = total
-return recipe_prices
+  recipe_prices = {}
+  for recipe, ingredients in recipes.items():
+  total = 0
+  for item in ingredients:
+  total += grocery_store[item]
+  recipe_prices[recipe] = total
+  return recipe_prices
 """
 csq_npoints = 3
 
 csq_tests = [
-{'code': 'ans = calculate_recipe_prices({"apple":1.0, "banana":2.0}, {"smoothie":["apple","banana"]})'},
-{'code': 'ans = calculate_recipe_prices({"egg":0.5,"milk":2.0,"flour":1.0}, {"pancake":["egg","milk","flour"]})'}
-] </question>
+  {'code': 'ans = calculate_recipe_prices({"apple":1.0, "banana":2.0}, {"smoothie":["apple","banana"]})'},
+  {'code': 'ans = calculate_recipe_prices({"egg":0.5,"milk":2.0,"flour":1.0}, {"pancake":["egg","milk","flour"]})'}
+]
+</question>
 
 ---
 
