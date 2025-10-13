@@ -23,7 +23,7 @@ several triangles), primitive datatypes - like text, integers, and
 decimals - and are the backbone of all the data strcutures and algorithms that
 govern our world today. 
 
-Python's primitive data types that appear in just about every script out there
+Python's primitive data types, that appear in just about every script out there,
 include:
 
 |   Type  | Full Name | Example                      | Real-World Analogy            |
@@ -45,6 +45,7 @@ these latter datatypes actually just use primitive types like ints or floats...
 
 <question multiplechoice>
 csq_prompt = "Which Python type best stores your average pace of `@{round(3.1/(20 + (5/60)),2)}` miles/min?"
+csq_renderer = 'radio'
 csq_options = ["int", "float", "str", "bool"]
 csq_soln = "float"
 </question>
@@ -110,7 +111,7 @@ comparison ones like `==` and `>`, and the other ones not mentioned here like
 `<` (less than), `<=` (less than or equal to), and `>=`, will always return a
 BOOLEAN, since the expression can only be evaluated to TRUE or FALSE.
 
-Also note that these operations can be used together. The order of operatoins,
+Also note that these operations can be used together. The order of operations,
 PEMDAS, holds here, but to be safe you can just always wrap operations you want
 to be evaluated first in parenthesis.
 
@@ -129,6 +130,8 @@ you can actually run these operations on a mix of the two, e.g.
 One caveat here is that if a `float` is present in the expression, then the
 result will be a float - even if the result is a whole number as the above
 example shows.
+
+---
 
 Next are string (`str`) operations, which aren't hard to understand but become a
 bit less obvious:
@@ -169,8 +172,10 @@ powerful "encoding" is the
 of characters. Take a look if you have time! **Note: if interested, ask your
 instructor about binary numbers!**
 
-Finally, we get to `boolean`s. These are a bit less intuitive too, but no until
-you recognize the trick:
+---
+
+Finally, we get to `boolean`s. These are a bit less intuitive too, but only
+until you recognize the trick:
 
 | Operation         | Example                  |
 |-------------------|--------------------------|
@@ -308,7 +313,7 @@ Here are some examples:
 Note that for numbers in `bool()`, only `0` evaluates to `False`. The rest of
 the numbers evaluate to `True`. For strings, the empty string `""` evaluates to
 `False`, but all other strings with at least one character evaluate to `True`.
-What values of different datatypes evaluate to `True` or `False is actually
+What values of different datatypes evaluate to `True` or `False` is actually
 known as the
 ["truthy"](https://stackoverflow.com/questions/39983695/what-is-truthy-and-falsy-how-is-it-different-from-true-and-false)
 or "falsey" (actual names, lol) values. More on this in the next lesson once we
@@ -319,7 +324,7 @@ cover conditionals.
 
 <question multiplechoice>
 csq_renderer = 'radio'
-csq_prompt="""Given that `age` is currently a variable set the string `"28"`,
+csq_prompt="""Given that `age` is currently a variable set to the string `"28"`,
   which of these would reassign `age` to the **integer** `28`?
 """
 csq_options=['`age = float(age)`', '`age = str(age)`', '`age = bool(age)`', '`age = int(age)`']
@@ -330,13 +335,13 @@ csq_explanation = "you'll need to use `int()` !"
 
 <section>Final Project: calculate_stats</section>
 
-Taking things back to the real life, let's use python to some statistics about
-run given the number of miles you ran (expressed as a float), and the number of
-minutes and seconds (both integers) you ran for. Specifically, given these
-numbers stored in variables `miles`, `minutes`, and `seconds`, you will
+Taking things back to the real life, let's use python to give some statistics
+about your run given the number of miles you ran (expressed as a float), and the
+number of minutes and seconds (both integers) you ran for. Specifically, given
+these numbers stored in variables `miles`, `minutes`, and `seconds`, you will
 calculate:
 
-- Your `miles_pace` (that's **minutes** per **mile**)
+- Your `miles_pace` (that's **minutes** per **mile**), but don't forget to convert seconds to minutes in here too!
 - `num_kilometers`: The numer of kilometers you've ran (**Hint:** 1 mi = 1.61 km)
 - `mph`: Your MPH, miles per hour
 - `is_faster_than_a_capybara`: Whether or not your mph is faster than a capybara, which run **22mph** (this
@@ -375,9 +380,9 @@ csq_soln = """def calculate_stats(miles: float, minutes: int, secs: int):
 csq_npoints = 3
 
 csq_tests = [
-{'code': 'ans = calculate_stats(1, 8, 5)'},
-{'code': 'ans = calculate_stats(10, 80, 30)'},
-{'code': 'ans = calculate_stats(12, 120, 3600)'},
+{'code': 'ans = calculate_stats(1, 8, 5) < 0.1'},
+{'code': 'ans = calculate_stats(10, 80, 30) < 0.1'},
+{'code': 'ans = calculate_stats(12, 120, 3600) < 0.1'},
 ]
 </question>
 
