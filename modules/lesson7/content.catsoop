@@ -1,0 +1,306 @@
+<section>Intro</section>
+
+Welcome to **Lesson 7: “Clash of Classes”** ⚔️
+Today, we’re entering the world of **Object-Oriented Programming (OOP)** — a way to organize your code into *objects* that bundle **data** (variables) and **behavior** (functions).
+
+You’ll learn how to create **classes** and **objects**, and by the end, you’ll build a troop system with specialized air and ground units, just like in Clash of Clans! 🏰
+
+---
+
+<section>Scenario</section>
+
+Imagine you’re designing Clash of Clans. You want to model troops — each troop has a name, health, attack power, and a way to attack.
+Using what you’ve learned so far (variables, loops, functions), you *could* do this with dictionaries… 
+
+```python
+troop1 = {
+    "name": "Barbarian",
+    "health": 100,
+    "attack_power": 20
+}
+```
+
+...but this gets messy fast as you add more troops or want behaviors.
+
+Classes to the rescue! 🦸‍♂️
+
+---
+
+<section>What is a Class?</section>
+
+A **class** is like a blueprint — it describes what an object *should have* and *can do*.
+An **object** is an instance (a built copy) of that blueprint.
+
+The basic syntax to define a class:
+```python
+class ClassName:
+    def __init__(self, parameters):
+        # initialize attributes
+
+    def method_name(self):
+        # define behavior
+```
+
+Notice the `__init__` method? It’s a special function called the "constructor"
+that runs when you create a new object from the class. It’s used to set up the
+object’s initial state.
+
+Notice the `self` parameter in every method? It's required for every class method 
+so that the function has a way to refer to the specific instance of the class
+it’s being operated on.
+
+Here’s a simple example for a `Troop` class in Clash of Clans:
+
+```python
+class Troop:
+    def __init__(self, name, health, attack_power):
+        self.name = name
+        self.health = health
+        self.attack_power = attack_power
+
+    def attack(self):
+        print(f"{self.name} attacks with {self.attack_power} power!")
+
+# Create an object from the class
+troop1 = Troop("Barbarian", 100, 25)
+troop1.attack()
+```
+
+Output:
+
+```
+Barbarian attacks with 25 power!
+```
+
+* `class Troop:` → defines a new class
+* `__init__` → special function that runs when a new object is created (like setup)
+* `self` → refers to the current object (like “me”)
+
+---
+
+<section>Check-in Questions</section>
+
+<question multiplechoice>
+csq_prompt = "What does the `__init__` method do in a Python class?"
+csq_renderer = 'radio'
+csq_options = [
+"It defines what happens when an object is created.",
+"It deletes an object.",
+"It prints the object.",
+"It compares two objects.",
+]
+csq_soln = 0
+csq_soln_mode = "index"
+csq_explanation = "`__init__` initializes (sets up) a new object when it’s created."
+</question>
+
+<question multiplechoice>
+csq_prompt = "What does `self` refer to inside a class?"
+csq_renderer = 'radio'
+csq_options = [
+"A random variable.",
+"The class itself.",
+"The specific object calling the method.",
+"Python’s interpreter.",
+]
+csq_soln = 2
+csq_soln_mode = "index"
+csq_explanation = "`self` refers to the *specific instance* (object) of the class currently being used."
+</question>
+
+---
+
+<section>Class Attributes and Methods</section>
+
+You can store data in attributes and actions in methods.
+
+```python
+class Troop:
+    def __init__(self, name, health, attack_power):
+        self.name = name
+        self.health = health
+        self.attack_power = attack_power
+
+    def attack(self):
+        print(f"{self.name} attacks with {self.attack_power} power!")
+
+    def take_damage(self, damage):
+        self.health -= damage
+        print(f"{self.name} took {damage} damage! Health is now {self.health}.")
+```
+
+Now try it:
+
+```python
+archer = Troop("Archer", 80, 15)
+print(f"Deploying troop: {archer.name}")        # Access attribute
+archer.attack()
+archer.take_damage(20)
+```
+
+Output:
+
+```
+Deploying troop: Archer
+Archer attacks with 15 power!
+Archer took 20 damage! Health is now 60.
+```
+
+---
+
+<section>Mini Challenge</section>
+
+<question pythoncode>
+csq_prompt = """Create a **`Building`** class with an `__init__` method that
+takes in and stores a string `name` and float `hit_points`.  
+Then create a class method `take_damage()` that prints:  
+`'<name> took <damage> damage! Health is now <hit_points>.'` and subtracts
+`damage` from `hit_points`. If `hit_points` drops to 0 or below, the method
+should also print `'<name> has been destroyed!'`
+"""
+csq_initial = """class Building:
+  # your code here
+  pass
+
+
+# == test case == 
+
+town_hall = Building("Town Hall", 1000)
+
+town_hall.take_damage(200)  # should print: Town Hall took 200 damage! Health is now 800.
+town_hall.take_damage(800)  # should print: Town Hall took 800 damage! Health is now 0.
+                            # should also print: Town Hall has been destroyed!
+
+"""
+csq_soln = """class Building:
+    def __init__(self, name, hit_points):
+        self.name = name
+        self.hit_points = hit_points
+
+    def take_damage(self, damage):
+        self.hit_points -= damage
+        print(f"{self.name} took {damage} damage! Health is now {self.hit_points}.")
+        if self.hit_points <= 0:
+            print(f"{self.name} has been destroyed!")
+"""
+csq_npoints = 2
+csq_tests = [
+    {'code': 'ans = True'}
+]
+</question>
+
+---
+
+<section>Inheritance: Specialized Troops</section>
+
+Sometimes, you want to make special versions of your class — like **AirTroop** and **GroundTroop** — without rewriting everything.
+Enter **inheritance**. Inheritance lets a class (child) inherit attributes and methods from another class (parent).
+
+For example, let’s create `GroundTroop` and `AirTroop` classes that inherit from `Troop`:
+
+```python
+class GroundTroop(Troop):
+    def move(self):
+        print(f"{self.name} marches forward!")
+
+class AirTroop(Troop):
+    def move(self):
+        print(f"{self.name} flies through the air!")
+```
+
+Now you can do:
+
+```python
+dragon = AirTroop("Dragon", 120, 35)
+giant = GroundTroop("Giant", 200, 20)
+
+dragon.move()
+giant.move()
+dragon.attack()
+giant.take_damage(dragon.attack_power)
+```
+
+Output:
+
+```
+Dragon flies through the air!
+Giant marches forward!
+Dragon attacks with 35 power!
+Giant took 35 damage! Health is now 165.
+```
+
+Notice how we were able to use `attack()` and `take_damage()` from the `Troop`
+class without redefining them in `AirTroop` or `GroundTroop`? We also didn't
+have to rewrite the `__init__` method because they inherit it from `Troop`!
+
+Inheritance is powerful: It lets you build complex systems and representations
+that build off simpler ones.
+
+---
+
+<section>Final Project: Clash of Classes</section>
+
+Now it’s time for the main battle! 🧙‍♂️
+You’ll create a full troop system with inheritance.
+
+Requirements:
+
+* Base class: **`Troop`** with attributes `name`, `health`, and `attack_power`.
+* Subclasses: **`GroundTroop`** and **`AirTroop`**, each with a `move()` method that prints something unique.
+* A specialized troop (like `Dragon` or `Giant`) that overrides the `attack()` method to print a cooler attack message.
+
+Example output:
+
+```
+Dragon flies through the air!
+Dragon attacks with fiery breath for 50 damage!
+```
+
+<question pythoncode>
+csq_prompt = """Create the classes as described: `Troop`, `GroundTroop`, and `AirTroop`.  
+Then create a subclass of `AirTroop` called `Dragon` that overrides `attack()`.
+"""
+csq_initial = """# your code here
+"""
+csq_soln = """class Troop:
+    def __init__(self, name, health, attack_power):
+        self.name = name
+        self.health = health
+        self.attack_power = attack_power
+
+```
+def attack(self):
+    print(f"{self.name} attacks with {self.attack_power} power!")
+```
+
+class GroundTroop(Troop):
+def move(self):
+print(f"{self.name} marches forward!")
+
+class AirTroop(Troop):
+def move(self):
+print(f"{self.name} flies through the air!")
+
+class Dragon(AirTroop):
+def attack(self):
+print(f"{self.name} attacks with fiery breath for {self.attack_power} damage!")
+"""
+csq_npoints = 3
+csq_tests = [
+{'code': 'd = Dragon("Dragon", 150, 50); d.move(); d.attack()'},
+{'code': 'g = GroundTroop("Giant", 200, 20); g.move(); g.attack()'}
+] </question>
+
+---
+
+<section>Key Takeaways</section>
+
+Amazing work, @{cs_username}! 🏆
+You’ve just learned one of the most powerful programming ideas — **Object-Oriented Programming**.
+Today you:
+
+* Created classes and objects
+* Used the `__init__` constructor and `self`
+* Practiced inheritance and overriding
+
+Your code is now structured, scalable, and battle-ready! ⚔️
